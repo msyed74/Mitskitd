@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   },
 
   divider:{
-    flexDirection:"column"
+    flexDirection:"row"
   },
   sectionone: {
     backgroundColor: "#fff",
@@ -43,28 +43,28 @@ export const styles = StyleSheet.create({
   },
 
   sectiontwo: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
+    flexDirection: "column",
+    display: "flex",
+    borderRadius: 10,
   },
   section: {
-    backgroundColor: "#fff",
-    padding: 15,
-    marginRight: 10,
+    padding: 0,
     borderRadius: 10,
     alignItems: "center",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 2, height: 2 },
     height:160,
+    width:190
   },
   button: {
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#e0e0e0",
-    padding: 10,
+    padding: 1,
+    marginTop:20,
     borderRadius: 8,
-    minWidth: 150,
+    minWidth: 160,
     height:130,
     justifyContent: "center",
   },

@@ -6,11 +6,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { useNavigation } from "@react-navigation/native";
+import Announcements from "@/components/Announcements";
 
 const today = new Date();
 const formattedDate = format(today, "EEEE dd yyyy"); // Format it as YYYY-MM-DD
 
 export default function index() {
+  const navigation = useNavigation();
   const timetable = useQuery(api.timetable.getTimetable);
 
   return (
@@ -71,7 +74,10 @@ export default function index() {
         <View style={styles.divider}>
         <View style={styles.sectiontwo}>
           <View style={styles.section}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+            onPress={() => {navigation.navigate("Announcements")}}
+
+            style={styles.button}>
               <Ionicons name="megaphone" size={40} color="black" />{" "}
               {/* Announcement Icon */}
               <Text style={styles.text}>Announcements</Text>

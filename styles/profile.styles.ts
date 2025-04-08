@@ -1,5 +1,6 @@
 // styles/profile.styles.ts
 import { COLORS } from "@/constants/theme";
+import { getTimetable } from "@/convex/timetable";
 import { Dimensions, StyleSheet } from "react-native";
 
 const { width, height } = Dimensions.get("window");
@@ -25,7 +26,7 @@ export const styles = StyleSheet.create({
   username: {
     fontSize: 20,
     fontWeight: "700",
-    color: COLORS.white,
+    color: COLORS.black,
   },
   headerRight: {
     flexDirection: "row",
@@ -50,7 +51,7 @@ export const styles = StyleSheet.create({
     height: 86,
     borderRadius: 43,
     borderWidth: 2,
-    borderColor: COLORS.surface,
+    borderColor: COLORS.black,
   },
   statsContainer: {
     flex: 1,
@@ -239,4 +240,35 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: COLORS.white,
   },
+  timetable: {
+    backgroundColor: "#fff",
+    
+    width: "100%",
+    padding : 25
+  },
+  timetableh: {
+     fontSize: 24,
+     textAlign:"center",
+    fontWeight:"500"
+  },
+  TextInput: {
+    backgroundColor: "#f0f0f0",
+    padding: 10,
+    borderRadius: 5,
+    fontSize: 16,
+    marginBottom:5,
+  },
+  button: {
+    backgroundColor: "#007bff",
+    padding: 20,
+    marginTop: 0,
+    borderRadius: 0,
+    alignItems: "center",
+  },
+  timetablec:{
+    paddingTop:35,
+    paddingBottom: 30
+    
+  }
+  
 });

@@ -1,37 +1,40 @@
-import { useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
-import { View, Text, TextInput, Button } from "react-native";
-import { useState } from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import React from "react";
+import { styles } from "../../../styles/profile.styles";
+import Timetable from "@/components/timetable";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Profile() {
-  const addSchedule = useMutation(api.timetable.addSchedule);
-  const [subject, setSubject] = useState("");
-  const [time, setTime] = useState("");
-  const [place, setPlace] = useState("");
-  const [lecturer, setLecturer] = useState("");
-
-  const handleAdd = async () => {
-    try {
-      await addSchedule({
-        subject,
-        time,
-        place,
-        lecturer,
-      });
-      alert("Schedule added successfully!");
-    } catch (error) {
-      console.error(error);
-      alert("Failed to add schedule.");
-    }
-  };
+  const navigation = useNavigation();
+  
 
   return (
-    <View>
-      <TextInput placeholder="Subject" value={subject} onChangeText={setSubject} />
-      <TextInput placeholder="Time" value={time} onChangeText={setTime} />
-      <TextInput placeholder="Place" value={place} onChangeText={setPlace} />
-      <TextInput placeholder="Lecturer" value={lecturer} onChangeText={setLecturer} />
-      <Button title="Add Schedule" onPress={handleAdd} />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <Text style={styles.username}>Profile</Text>
+        </View>
+      </View>
+
+      <View style={styles.profileInfo}>
+        <View style={styles.avatarAndStats}>
+          <View style={styles.avatarContainer}>
+            <Image
+              source={{ uri: "https://example.com/avatar.jpg" }}
+              style={styles.avatar}
+            />
+          </View>
+          <View style={styles.statsContainer}>
+            <Text>Followers: 100</Text>
+            <Text>Following: 50</Text>
+          </View>
+        </View>
+         <View>
+        <TouchableOpacity onPress={() => navigation.navigate("Timetable")}>
+          <Text>Timetable</Text>
+        </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 }

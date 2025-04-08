@@ -16,6 +16,8 @@ import Notification from "../../components/Notification";
 import Chat from "../../components/Chat";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Image } from "expo-image";
+import Timetable from "@/components/timetable";
+import Announcements from "@/components/Announcements";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -87,6 +89,9 @@ export default function DrawerLayout() {
       <Stack.Screen name="DrawerScreens" component={DrawerScreens} />
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="Timetable" component={Timetable} />
+      <Stack.Screen name="Announcements" component={Announcements} />
+
     </Stack.Navigator>
   );
 }
