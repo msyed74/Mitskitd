@@ -7,7 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useNavigation } from "@react-navigation/native";
-import Announcements from "@/components/Announcements";
+
 
 const today = new Date();
 const formattedDate = format(today, "EEEE dd yyyy"); // Format it as YYYY-MM-DD
@@ -85,7 +85,9 @@ export default function index() {
           </View>
 
           <View style={styles.section}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+            onPress={() => navigation.navigate("Clubs")}
+            style={styles.button}>
               <Ionicons name="business" size={40} color="black" />{" "}
               {/* Clubs Icon */}
               <Text style={styles.text}>Clubs</Text>
@@ -93,7 +95,9 @@ export default function index() {
           </View>
 
           <View style={styles.section}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+            onPress={( ) => navigation.navigate("Alumni")}
+            style={styles.button}>
               <Ionicons name="people" size={40} color="black" />{" "}
               {/* Alumni Icon */}
               <Text style={styles.text}>Alumni</Text>
@@ -101,16 +105,20 @@ export default function index() {
           </View>
 
           <View style={styles.section}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+            onPress={( ) => navigation.navigate("Recruitment")} 
+            style={styles.button}>
               <Ionicons name="people-circle" size={40} color="black" />{" "}
               {/* Recruitment Teams Icon */}
-              <Text style={styles.text}>Recruitment Teams</Text>
+              <Text style={styles.text}>Recruitment</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.sectiontwo}>
           <View style={styles.section}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+            onPress={() => navigation.navigate("Academic")}
+            style={styles.button}>
               <Ionicons name="calendar" size={40} color="black" />{" "}
               {/* Announcement Icon */}
               <Text style={styles.text}>Academic</Text>

@@ -16,34 +16,29 @@ import Notification from "../../components/Notification";
 import Chat from "../../components/Chat";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Image } from "expo-image";
-import Timetable from "@/components/timetable";
+import Timetable from "@/components/Timetable";
 import Announcements from "@/components/Announcements";
+import Recruitment from "@/components/Recruitment";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 function DrawerScreens() {
   const { signOut } = useAuth();
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawer {...props} 
-      />
-    }
-
+      drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={{
         headerShown: true,
         headerStyle: { backgroundColor: "#ffff" },
         headerTintColor: COLORS.black,
         headerTitleStyle: { fontSize: 20, fontWeight: "bold" },
 
-       
         headerRight: () => (
           <View style={styles.headerbutton}>
-            <TouchableOpacity 
-              onPress={() => navigation.navigate("Search")}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
               <Ionicons name="search-outline" size={24} color={COLORS.black} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
@@ -56,9 +51,13 @@ function DrawerScreens() {
             <TouchableOpacity
               onPress={() => navigation.navigate("Notification")}
             >
-              <Ionicons name="notifications-outline" size={24} color={COLORS.black} />
+              <Ionicons
+                name="notifications-outline"
+                size={24}
+                color={COLORS.black}
+              />
             </TouchableOpacity>
-           {/* Uncomment if you want to add Calendar screen}
+            {/* Uncomment if you want to add Calendar screen}
             <TouchableOpacity onPress={() => signOut()}>
               <Ionicons name="log-out" size={24} color={COLORS.black} />
             </TouchableOpacity>
@@ -67,17 +66,13 @@ function DrawerScreens() {
         ),
       }}
     >
-      
       <Drawer.Screen
         name="Profile"
         component={index}
         options={{
           headerTitle: "MITSKIT",
         }}
-      
       />
-     
-       
     </Drawer.Navigator>
   );
 }
@@ -91,7 +86,10 @@ export default function DrawerLayout() {
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="Timetable" component={Timetable} />
       <Stack.Screen name="Announcements" component={Announcements} />
-
+      <Stack.Screen name="CalendarScreen" component={CalendarScreen} />
+      <Stack.Screen name="Recruitment" component={Recruitment} />
+      <Stack.Screen name="Alumni" component={Alumni} />
+      <Stack.Screen name="Clubs" component={Clubs} />
     </Stack.Navigator>
   );
 }

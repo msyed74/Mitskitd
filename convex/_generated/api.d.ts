@@ -14,6 +14,8 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as http from "../http.js";
+import type * as messages_get from "../messages/get.js";
+import type * as messages_send from "../messages/send.js";
 import type * as posts from "../posts.js";
 import type * as timetable from "../timetable.js";
 import type * as users from "../users.js";
@@ -28,6 +30,8 @@ import type * as users from "../users.js";
  */
 declare const fullApi: ApiFromModules<{
   http: typeof http;
+  "messages/get": typeof messages_get;
+  "messages/send": typeof messages_send;
   posts: typeof posts;
   timetable: typeof timetable;
   users: typeof users;

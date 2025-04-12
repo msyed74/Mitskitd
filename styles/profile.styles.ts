@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
   statNumber: {
     fontSize: 17,
     fontWeight: "700",
-    color: COLORS.white,
+    color: COLORS.black,
     marginBottom: 4,
   },
   statLabel: {
@@ -75,12 +75,12 @@ export const styles = StyleSheet.create({
   name: {
     fontSize: 15,
     fontWeight: "600",
-    color: COLORS.white,
+    color: COLORS.black,
     marginBottom: 4,
   },
   bio: {
     fontSize: 14,
-    color: COLORS.white,
+    color: COLORS.black,
     lineHeight: 20,
   },
   actionButtons: {
@@ -90,18 +90,18 @@ export const styles = StyleSheet.create({
   },
   editButton: {
     flex: 1,
-    backgroundColor: COLORS.surface,
+    backgroundColor: COLORS.grey,
     padding: 8,
     borderRadius: 8,
     alignItems: "center",
   },
   editButtonText: {
-    color: COLORS.white,
+    color: COLORS.black,
     fontWeight: "600",
     fontSize: 14,
   },
   shareButton: {
-    backgroundColor: COLORS.surface,
+    backgroundColor: COLORS.grey,
     padding: 8,
     borderRadius: 8,
     aspectRatio: 1,

@@ -69,5 +69,16 @@ export default defineSchema({
     time: v.string(),
     place: v.string(),
     lecturer: v.string(),
-  })
+  }),
+
+  messages: defineTable({
+    senderId: v.id("users"),
+    receiverId: v.id("users"),
+    content: v.string(),
+    timestamp: v.number(),
+    text: v.string(),
+  }),
+  
+
+
 });
