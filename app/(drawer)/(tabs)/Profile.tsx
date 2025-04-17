@@ -51,8 +51,6 @@ export default function Profile() {
               <Image
                 source={{ uri: currentUser.image }}
                 style={styles.avatar}
-                contentFit="cover"
-                transition={200}
               />
             </View>
             <View style={styles.statsContainer}>
@@ -85,12 +83,12 @@ export default function Profile() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity onPress={() => navigation.navigate("Timetable")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Timetable" as never)}>
             <Text>Timetable</Text>
           </TouchableOpacity>
         </View>
 
-        {posts.length === 0 && <NoPostsFound />}
+        {posts.length === 0 && <NoPostsFound navigation={navigation} />}
         <FlatList 
         data={posts}
         numColumns={3}
@@ -100,8 +98,6 @@ export default function Profile() {
             <Image
               source={{uri : item.imageUrl}}
               style={styles.gridImage}
-              contentFit="cover"
-              transition={200}
             />     
           </TouchableOpacity>
         )}
@@ -110,7 +106,7 @@ export default function Profile() {
     </View>
   );
 }
-function NoPostsFound() {
+function NoPostsFound({ navigation }: { navigation: any }) {
   return (
     <View
       style={{
@@ -134,7 +130,7 @@ function NoPostsFound() {
           padding: 10,
           borderRadius: 5,
         }}
-        onPress={() => navigation.navigate("Explore")}
+        onPress={() => navigation.navigate("Explore" as never)}
       >
         <Text style={{ color: "white", fontSize: 16 }}>Explore</Text>
       </TouchableOpacity>

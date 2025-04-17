@@ -16,7 +16,7 @@ export default function Login() {
       });
       if (setActive && createdSessionId) {
         setActive({ session: createdSessionId });
-        router.replace("/(drawer)");
+        router.replace("/(drawer)/(tabs)");
       }
     } catch (error) {
       console.error("OAuth error", error);

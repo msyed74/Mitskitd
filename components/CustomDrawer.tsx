@@ -1,128 +1,209 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { COLORS } from "@/constants/theme";
+import { View, Text, ScrollView, Animated, Easing, Image } from "react-native";
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { Calendar } from "react-native-calendars";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useAuth } from "@clerk/clerk-expo";
+import { Ionicons } from "@expo/vector-icons";
+import { styles } from "@/styles/drawer.styles";
+import { useQuery } from "convex/react";
+import { useUser } from "@clerk/clerk-expo";
+import { api } from "@/convex/_generated/api";
+import { format } from "date-fns";
 
-const CalendarScreen = () => {};
-const [selectedDate, setSelectedDate] = useState("");
+import { DrawerContentComponentProps } from "@react-navigation/drawer";
 
-export default function CustomDrawer(props) {
+export default function CustomDrawer(props: DrawerContentComponentProps) {
+  const scrollx = useRef(new Animated.Value(0)).current;
+  const scrollRef = useRef<ScrollView>(null);
+
+  const CalendarScreen = () => {};
+  const { userId } = useAuth();
+  const currentUser = useQuery(
+    api.users.getUserByClerkId,
+    userId ? { clerkId: userId } : "skip"
+  );
+  const { user } = useUser();
+  const [selectedDate, setSelectedDate] = useState("");
+  const { signOut } = useAuth();
+  useEffect(() => {
+    const interval = 20; // scroll speed
+    let scrollValue = 0;
+    const itemWidth = 160; // approximate width of one alert item
+    const totalItems = alertItems.length * 2;
+    const totalScrollWidth = itemWidth * totalItems;
+
+    const scroller = setInterval(() => {
+      scrollValue += 1;
+
+      if (scrollRef.current) {
+        scrollRef.current.scrollTo({ x: scrollValue, animated: false });
+
+        // Reset scroll when we reach halfway (original array duplicated)
+        if (scrollValue >= totalScrollWidth / 2) {
+          scrollValue = 0;
+          scrollRef.current.scrollTo({ x: 0, animated: false });
+        }
+      }
+    }, interval);
+
+    return () => clearInterval(scroller);
+  }, []);
+
+  const alertItems = [
+    "📢 Events",
+    "📝 Announcements",
+    "🎉 Clubs",
+    "💼 Recruitment",
+    "🎓 Alumni",
+    "📅 Timetable",
+    "📘 Academics",
+    "💬 Chat",
+  ];
+
+  const timetable = useQuery(api.timetable.getTimetable);
+
+  const today = new Date();
+  const formattedDate = format(today, "EE, MMMM dd ");
   return (
     <DrawerContentScrollView {...props}>
-      {/* Default Drawer Items */}
+      {/* Default Drawer Items 
       <DrawerItemList {...props} />
-
+*/}
       <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.imagecontainer}>
+            <Image
+              source={{ uri: currentUser?.image }}
+              style={styles.image}
+            />
+          </View>
+          <Text style={styles.headertext}>Hello, {currentUser?.username}</Text>
+          <Text style={styles.subheadertext}>Enhance Your MITS Journey</Text>
+        </View>
+        <View style={styles.divider} />
+        <Text style={styles.text}> {formattedDate}</Text>
+        <View style={styles.divider} />
+
         <Text style={styles.title}>MITS CALENDAR</Text>
 
         <Calendar
           onDayPress={(day) => setSelectedDate(day.dateString)}
           markedDates={{
-            [selectedDate]: { selected: true, selectedColor: "blue" },
+            [selectedDate]: { selected: true, selectedColor: "red" },
           }}
           theme={{
             todayTextColor: "red",
-            arrowColor: "blue",
+            arrowColor: "red",
           }}
         />
 
         {selectedDate ? (
-          <Text style={styles.selectedDate}>MITS Calendar {selectedDate}</Text>
+          <Text style={styles.selectedDate}>📅 {selectedDate}</Text>
         ) : null}
-      </View>
 
-      {/* Roadmap Section */}
-      <View style={styles.roadmapContainer}>
-        <Text style={styles.title}>Roadmap to Success 🚀</Text>
-
-        <ScrollView contentContainerStyle={styles.roadmapContent}>
-          <View style={styles.step}>
-            <Text style={styles.stepTitle}>📌 Step 1: Learn the Basics</Text>
-            <Text style={styles.stepText}>
-              Understand JavaScript, React, and React Native fundamentals.
-            </Text>
+        <View style={styles.divider} />
+        <View style={styles.alertWrapper}>
+          <Animated.ScrollView
+            ref={scrollRef}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={16}
+            scrollEnabled={false}
+          >
+            {alertItems.map((item, index) => (
+              <View key={index} style={styles.alertItem}>
+                <Text style={styles.alerttext}>{item}</Text>
+              </View>
+            ))}
+          </Animated.ScrollView>
+        </View>
+        <View style={styles.divider} />
+        <View style={styles.buttoncontainer}>
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLORS.primary,
+                padding: 10,
+                borderRadius: 25,
+                margin: 0,
+              }}
+              onPress={() => props.navigation.navigate("Notification")}
+            >
+              <Text style={styles.buttontext}>
+                <View style={{ paddingRight: 15, alignItems: "center" }}>
+                  <Ionicons
+                    name="notifications-outline"
+                    size={16}
+                    color="Black"
+                  />
+                </View>
+                Notifications
+              </Text>
+            </TouchableOpacity>
           </View>
 
-          <View style={styles.step}>
-            <Text style={styles.stepTitle}>📌 Step 2: Learn Navigation</Text>
-            <Text style={styles.stepText}>
-              Get familiar with React Navigation and different navigators.
-            </Text>
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLORS.primary,
+                padding: 10,
+                borderRadius: 25,
+                margin: 0,
+              }}
+              onPress={() => props.navigation.navigate("Recruitment")}
+            >
+              <Text style={styles.buttontext}>
+                <View style={{ paddingRight: 15, alignItems: "center" }}>
+                  <Ionicons name="people-outline" size={16} color="Black" />
+                </View>
+                Recruitment
+              </Text>
+            </TouchableOpacity>
           </View>
-
-          <View style={styles.step}>
-            <Text style={styles.stepTitle}>📌 Step 3: State Management</Text>
-            <Text style={styles.stepText}>
-              Explore Redux, Zustand, or React Context API.
-            </Text>
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLORS.primary,
+                padding: 10,
+                borderRadius: 25,
+                margin: 0,
+              }}
+              onPress={() => props.navigation.navigate("Settings")}
+            >
+              <Text style={styles.buttontext}>
+                <View style={{ paddingRight: 15, alignItems: "center" }}>
+                  <Ionicons name="settings-outline" size={16} color="Black" />
+                </View>
+                Settings
+              </Text>
+            </TouchableOpacity>
           </View>
-
-          <View style={styles.step}>
-            <Text style={styles.stepTitle}>📌 Step 4: Backend & APIs</Text>
-            <Text style={styles.stepText}>
-              Integrate APIs and backend services using Axios or Fetch.
+        </View>
+        <View style={styles.divider} />
+        <View style={styles.buttonlogout}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              borderRadius: 25,
+              margin: 0,
+            }}
+            onPress={() => signOut()}
+          >
+            <Text style={styles.logouttext}>
+              <View style={{ paddingRight: 15, alignItems: "center" }}>
+                <Ionicons name="log-out-outline" size={16} color="Black" />
+              </View>
+              Logout
             </Text>
-          </View>
-
-          <View style={styles.step}>
-            <Text style={styles.stepTitle}>📌 Step 5: Deployment</Text>
-            <Text style={styles.stepText}>
-              Learn how to build and publish your app on the App Store & Play
-              Store.
-            </Text>
-          </View>
-        </ScrollView>
+          </TouchableOpacity>
+        </View>
       </View>
     </DrawerContentScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  roadmapContainer: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: "#F8F9FA",
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  roadmapContent: {
-    paddingBottom: 20,
-  },
-  step: {
-    backgroundColor: "#FFF",
-    padding: 12,
-    borderRadius: 10,
-    marginBottom: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  stepTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  stepText: {
-    fontSize: 14,
-    color: "#333",
-  },
-
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
- 
-  selectedDate: {
-    fontSize: 16,
-    textAlign: "center",
-    marginTop: 10,
-    color: "blue",
-  },
-});

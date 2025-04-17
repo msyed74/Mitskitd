@@ -59,7 +59,6 @@ http.route({
           clerkId: id,
           username: email.split("@")[0],
           email,
-          
           fullname: name,
           image: image_url,
          
