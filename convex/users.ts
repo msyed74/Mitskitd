@@ -1,6 +1,7 @@
-import { mutation,MutationCtx, QueryCtx } from "./_generated/server";
+import { mutation, MutationCtx, QueryCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { query } from "./_generated/server";
+
 
 // Create a new task with the given text
 export const createUser = mutation({
@@ -12,14 +13,20 @@ export const createUser = mutation({
     bio: v.optional(v.string()),
     clerkId: v.string(),
   },
+
   handler: async (ctx, args) => {
     const existingUser = await ctx.db
       .query("users")
       .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.clerkId))
       .first();
-      
+
     console.log("existingUser", existingUser);
     await ctx.auth.getUserIdentity();
+ 
+    if (!args.email.endsWith("mitsgwl.ac.in")) {
+      throw new Error("Only MITS emails are allowed.");
+      alert("Only MITS emails are allowed.");
+    }
 
     if (existingUser) return;
 
@@ -38,19 +45,18 @@ export const createUser = mutation({
   },
 });
 
-
-export async function getAuthtenticatedUser( ctx:QueryCtx |  MutationCtx ) {
+export async function getAuthtenticatedUser(ctx: QueryCtx | MutationCtx) {
   const identity = await ctx.auth.getUserIdentity();
-  if(!identity) throw new Error ("Unauthorized");
+  if (!identity) throw new Error("Unauthorized");
 
   const currentUser = await ctx.db
-   .query("users" )
-   .withIndex("by_clerk_id", (q) => q.eq("clerkId", identity.subject))
-   .first();
+    .query("users")
+    .withIndex("by_clerk_id", (q) => q.eq("clerkId", identity.subject))
+    .first();
 
-   if(!currentUser) throw new Error ("user not found ");
+  if (!currentUser) throw new Error("user not found ");
 
-   return currentUser;  
+  return currentUser;
 }
 
 export const updateProfile = mutation({
@@ -62,13 +68,12 @@ export const updateProfile = mutation({
   handler: async (ctx, args) => {
     const currentUser = await getAuthtenticatedUser(ctx);
 
-    await ctx.db.patch(currentUser._id,{
+    await ctx.db.patch(currentUser._id, {
       fullname: args.fullname,
       bio: args.bio,
-    })
-  
+    });
   },
-})
+});
 
 export const getUserByClerkId = query({
   args: {
@@ -80,7 +85,6 @@ export const getUserByClerkId = query({
       .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.clerkId))
       .unique();
 
-      return user;
-  
+    return user;
   },
 });

@@ -5,10 +5,8 @@ export default function RootLayout() {
   return (
     <ClerkAndConvexProvider>
       <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#ddd" }}>
+        <SafeAreaView style={{ flex: 1 }}>
           <InitialLayout />
-          
-          
         </SafeAreaView>
       </SafeAreaProvider>
     </ClerkAndConvexProvider>

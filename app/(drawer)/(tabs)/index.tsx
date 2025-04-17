@@ -75,7 +75,7 @@ export default function index() {
         <View style={styles.sectiontwo}>
           <View style={styles.section}>
             <TouchableOpacity 
-            onPress={() => {navigation.navigate("Announcements")}}
+            onPress={() => {navigation.navigate("Announcements" as never)}}
 
             style={styles.button}>
               <Ionicons name="megaphone" size={40} color="black" />{" "}
@@ -86,7 +86,7 @@ export default function index() {
 
           <View style={styles.section}>
             <TouchableOpacity 
-            onPress={() => navigation.navigate("Clubs")}
+            onPress={() => navigation.navigate("Clubs" as never)}
             style={styles.button}>
               <Ionicons name="business" size={40} color="black" />{" "}
               {/* Clubs Icon */}
@@ -96,7 +96,7 @@ export default function index() {
 
           <View style={styles.section}>
             <TouchableOpacity
-            onPress={( ) => navigation.navigate("Alumni")}
+            onPress={( ) => navigation.navigate("Alumni" as never)}
             style={styles.button}>
               <Ionicons name="people" size={40} color="black" />{" "}
               {/* Alumni Icon */}
@@ -106,7 +106,7 @@ export default function index() {
 
           <View style={styles.section}>
             <TouchableOpacity
-            onPress={( ) => navigation.navigate("Recruitment")} 
+            onPress={( ) => navigation.navigate("Recruitment" as never)} 
             style={styles.button}>
               <Ionicons name="people-circle" size={40} color="black" />{" "}
               {/* Recruitment Teams Icon */}
@@ -117,7 +117,7 @@ export default function index() {
         <View style={styles.sectiontwo}>
           <View style={styles.section}>
             <TouchableOpacity 
-            onPress={() => navigation.navigate("Academic")}
+            onPress={() => navigation.navigate("Academic" as never)}
             style={styles.button}>
               <Ionicons name="calendar" size={40} color="black" />{" "}
               {/* Announcement Icon */}

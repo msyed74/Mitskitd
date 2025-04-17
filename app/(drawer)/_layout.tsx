@@ -9,7 +9,7 @@ import Alumni from "../../components/Alumni";
 import Clubs from "../../components/Clubs";
 import CustomDrawer from "../../components/CustomDrawer";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Search from "@/app/(drawer)/(tabs)/Feed";
+import Search from "../../components/Search";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { useAuth } from "@clerk/clerk-expo";
 import Notification from "../../components/Notification";
@@ -19,6 +19,8 @@ import { Image } from "expo-image";
 import Timetable from "@/components/Timetable";
 import Announcements from "@/components/Announcements";
 import Recruitment from "@/components/Recruitment";
+import Settings from "@/components/Settings";
+import Academic from "@/components/Academic";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -38,10 +40,14 @@ function DrawerScreens() {
 
         headerRight: () => (
           <View style={styles.headerbutton}>
-            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Search" as never)}
+            >
               <Ionicons name="search-outline" size={24} color={COLORS.black} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Chat" as never)}
+            >
               <Ionicons
                 name="chatbox-ellipses-outline"
                 size={24}
@@ -49,7 +55,7 @@ function DrawerScreens() {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => navigation.navigate("Notification")}
+              onPress={() => navigation.navigate("Notification" as never)}
             >
               <Ionicons
                 name="notifications-outline"
@@ -57,11 +63,6 @@ function DrawerScreens() {
                 color={COLORS.black}
               />
             </TouchableOpacity>
-            {/* Uncomment if you want to add Calendar screen}
-            <TouchableOpacity onPress={() => signOut()}>
-              <Ionicons name="log-out" size={24} color={COLORS.black} />
-            </TouchableOpacity>
-            */}
           </View>
         ),
       }}
@@ -83,13 +84,17 @@ export default function DrawerLayout() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="DrawerScreens" component={DrawerScreens} />
       <Stack.Screen name="Notification" component={Notification} />
-      <Stack.Screen name="Chat" component={Chat} />
+
       <Stack.Screen name="Timetable" component={Timetable} />
       <Stack.Screen name="Announcements" component={Announcements} />
       <Stack.Screen name="CalendarScreen" component={CalendarScreen} />
       <Stack.Screen name="Recruitment" component={Recruitment} />
       <Stack.Screen name="Alumni" component={Alumni} />
       <Stack.Screen name="Clubs" component={Clubs} />
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="Academic" component={Academic} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="Chat" component={Chat} />
     </Stack.Navigator>
   );
 }
